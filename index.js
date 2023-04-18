@@ -1,4 +1,3 @@
-//const http = require('http')
 const express = require('express')
 const app = express()
 
@@ -36,6 +35,20 @@ app.get('/api/persons/:id', (request, response) => {
   } else {
         response.status(404).end()
   }
+})
+
+app.get('/info', (request, response) => {
+
+    const idMax = Math.max(...persons.map (person => person.id))
+    const responseText = "Phonebook contains numbers of ${idMax} people"
+
+    
+    
+    response.send(`
+    <h4> Phonebook has info for ${idMax} people </h4>
+    <h4> ${new Date()} </h4>
+    `)
+
 })
 
 app.get('/api/persons', (request, response) => {
