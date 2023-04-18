@@ -41,8 +41,6 @@ app.get('/info', (request, response) => {
 
     const idMax = Math.max(...persons.map (person => person.id))
     const responseText = "Phonebook contains numbers of ${idMax} people"
-
-    
     
     response.send(`
     <h4> Phonebook has info for ${idMax} people </h4>
@@ -53,6 +51,13 @@ app.get('/info', (request, response) => {
 
 app.get('/api/persons', (request, response) => {
   response.json(persons)
+})
+
+app.delete('/api/persons/:id', (request, response) => {
+  const id = Number(request.params.id)
+  persons = persons.filter(person => person.id !== id)
+
+  response.status(204).end()
 })
 
 const PORT = 3001
