@@ -75,12 +75,26 @@ const getRandomId = (min, max) => {
 
 app.post('/api/persons', (request, response) => {
   const body = request.body
-  console.log(body)
+  console.log(body.name)
+  const names = persons.map(person => person.name)
+  const nameChecker = Object.values(names).includes(body.name)
+  console.log(nameChecker)
+  console.log(names)
 
-  if (!body) {
+  if (!body.name) {
     return response.status(400).json({ 
-      error: 'content missing' 
+      error: 'name missing' 
     })
+  } else if (nameChecker == true) {
+    return response.status(400).json({ 
+      error: 'name already in phonebook!' 
+    })
+  }
+  
+  else if (!body.number){
+    return response.status(400).json({ 
+      error: 'number missing' 
+  })
   }
 
   const person = {
