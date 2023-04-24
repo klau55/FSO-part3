@@ -1,13 +1,21 @@
-# fly.toml app configuration file generated for withered-morning-856 on 2023-04-20T19:35:51+03:00
+# fly.toml app configuration file generated for phonebook-b on 2023-04-24T20:02:23+03:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = "withered-morning-856"
+app = "phonebook-b"
 primary_region = "arn"
 
 [env]
   PORT = "3001"
+
+[experimental]
+  auto_rollback = true
+
+[[services]]
+  http_checks = []
+  internal_port = 8080 
+  processes = ["app"]
 
 [http_service]
   internal_port = 3001
