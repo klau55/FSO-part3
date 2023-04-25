@@ -48,11 +48,10 @@ app.get('/api/persons/:id', (request, response) => {
 
 app.get('/info', (request, response) => {
 
-    //const idMax = Math.max(...persons.map (person => person.id))
-    const responseText = "Phonebook contains numbers of ${persons.length} people"
+
     
     response.send(`
-    <h4> Phonebook has info for ${idMax} people </h4>
+    <h4> Phonebook has info for ${persons.length} people </h4>
     <h4> ${new Date()} </h4>
     `)
 
