@@ -8,6 +8,7 @@ app.use(express.static('build'))
 app.use(express.json())
 app.use(cors())
 app.use(morgan('tiny'))
+
 let persons = [
     { 
       "id": 1,
@@ -47,8 +48,8 @@ app.get('/api/persons/:id', (request, response) => {
 
 app.get('/info', (request, response) => {
 
-    const idMax = Math.max(...persons.map (person => person.id))
-    const responseText = "Phonebook contains numbers of ${idMax} people"
+    //const idMax = Math.max(...persons.map (person => person.id))
+    const responseText = "Phonebook contains numbers of ${persons.length} people"
     
     response.send(`
     <h4> Phonebook has info for ${idMax} people </h4>
