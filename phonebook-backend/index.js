@@ -11,12 +11,6 @@ app.use(cors())
 app.use(morgan('tiny'))
 
 
-
-
-
-
-
-
 app.get('/api/persons/:id', (request, response, next) => {
 
   Person.findById(request.params.id)
@@ -73,43 +67,27 @@ const getRandomId = (min, max) => {
 app.post('/api/persons', (request, response) => {
   const body = request.body
 
-  //const nameChecker = Object.values(names).includes(body.name)
-
-  if (!body.name) {
-    return response.status(400).json({ 
-      error: 'name missing' 
-    })
-  }// else if (nameChecker == true) {
-   // return response.status(400).json({ 
-   //   error: 'name already in phonebook!' 
-   // })
-  //}
-  
-  else if (!body.number){
-    return response.status(400).json({ 
-      error: 'number missing' 
-  })
-  }
-
   const person = new Person ({
     name: body.name,
     number: body.number,
     id: getRandomId(),
   })
 
-  person.save().then(savedPerson => {
-    response.json(savedPerson)
-  })
-
-
+  person.save()
+    .then(savedPerson => {
+      response.json(savedPerson)
+    })
+    .catch(error => next(error))
 })
+
 const errorHandler = (error, request, response, next) => {
   console.error(error.message)
 
   if (error.name === 'CastError') {
     return response.status(400).send({ error: 'malformatted id' })
-  } 
-
+  } else if (error.name === 'ValidationError') {
+    return response.status(400).json({ error: error.message })
+  }
   next(error)
 }
 
